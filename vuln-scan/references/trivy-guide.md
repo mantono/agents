@@ -60,6 +60,50 @@ Options:
 | `Vulnerabilities[].Title` | Brief description |
 | `Vulnerabilities[].CVSS.nvd.V3Score` | CVSS v3 score (0-10) |
 
+## Docker Image Scanning
+
+Scan a Docker image for vulnerabilities:
+
+```bash
+trivy image <image-name> --format json --scanners vuln
+```
+
+Examples:
+```bash
+# Scan local image
+trivy image myapp:latest --format json --scanners vuln
+
+# Scan image from registry
+trivy image nginx:1.21 --format json --scanners vuln
+
+# Build and scan in one go
+docker build -t temp:scan . && trivy image temp:scan --format json --scanners vuln
+```
+
+Options:
+- `image <name>` - Docker image to scan (local or remote)
+- `--format json` - JSON output for parsing
+- `--scanners vuln` - Only vulnerability scanning
+- `--severity CRITICAL,HIGH` - Filter by severity (optional)
+- `--ignore-unfixed` - Only show vulnerabilities with fixes (optional)
+
+**Note:** Docker image scans detect vulnerabilities in:
+- OS packages (apt, yum, apk, etc.)
+- Language-specific packages embedded in the image
+- Application dependencies
+
+The JSON output structure is identical to filesystem scanning.
+
+## Checking for Scannable Content
+
+Check if filesystem scan found any results:
+
+```bash
+trivy fs . --format json --scanners vuln | jq -r '.Results // [] | length'
+```
+
+If the output is `0`, no supported files were found.
+
 ## Parsing with jq
 
 Extract actionable vulnerabilities (those with fixes):

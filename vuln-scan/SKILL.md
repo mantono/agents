@@ -106,12 +106,59 @@ git tag -f vuln-scan-checkpoint-$(date +%Y%m%d-%H%M%S)
 
 ### Phase 3: Vulnerability Scan
 
-Run trivy filesystem scan:
+**Step 1: Run trivy filesystem scan**
+
 ```bash
 trivy fs . --format json --scanners vuln 2>/dev/null
 ```
 
 Save output to parse. See `references/trivy-guide.md` for JSON structure details.
+
+**Step 2: Check if supported files were found**
+
+Parse the JSON output to check if any results were found:
+```bash
+echo "$output" | jq -r '.Results // [] | length'
+```
+
+If the results array is empty or contains no vulnerability-scannable targets, proceed to Docker fallback.
+
+**Step 3: Docker Fallback (if no supported files found)**
+
+If filesystem scan found no supported files:
+
+1. **Look for Dockerfile:**
+```bash
+find . -maxdepth 3 -name "Dockerfile*" -o -name "*.dockerfile" 2>/dev/null
+```
+
+2. **If Dockerfile(s) found, choose which to scan:**
+   - If single Dockerfile, use it
+   - If multiple, prefer `Dockerfile` over variants
+   - If unclear, ask user with AskUserQuestion: "Multiple Dockerfiles found. Which should I build and scan?"
+
+3. **Build Docker image:**
+```bash
+# Use project directory name as image name
+image_name=$(basename "$PWD" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-_')
+docker build -f <dockerfile-path> -t "vuln-scan-temp:${image_name}" .
+```
+
+4. **Scan Docker image:**
+```bash
+trivy image "vuln-scan-temp:${image_name}" --format json --scanners vuln 2>/dev/null
+```
+
+5. **Clean up temporary image after scan:**
+```bash
+docker rmi "vuln-scan-temp:${image_name}" 2>/dev/null
+```
+
+**Step 4: No scannable targets found**
+
+If both filesystem and Docker fallback find nothing:
+- Report: "No supported dependency files or Dockerfiles found. Trivy supports: package.json, requirements.txt, Cargo.toml, go.mod, pom.xml, Gemfile, composer.json, and Dockerfiles."
+- Exit with success (no vulnerabilities found)
 
 ### Phase 4: Parse and Prioritize
 
@@ -207,6 +254,8 @@ Output a summary:
 ## Error Handling
 
 - **trivy not installed:** Provide installation instructions, abort
+- **Docker not installed (for image scanning):** If filesystem scan finds no files and Dockerfile exists but Docker is unavailable, report: "Docker is required to scan Dockerfiles. Install Docker or ensure dependency files are present for filesystem scanning."
+- **Docker build fails:** Report build error, skip Docker scanning, exit with filesystem scan results (or report no scannable targets if filesystem was empty)
 - **Git not clean:** List uncommitted changes, abort
 - **Unknown project type:** Ask user for build/test commands
 - **Update command fails:** Rollback, report error, continue or abort
