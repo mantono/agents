@@ -1,0 +1,89 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Read",
+      "Bash(git log *)",
+      "Bash(git --no-pager log *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git worktree *)",
+      "Bash(git --version)",
+      "Bash(git --help)",
+      "Bash(gh --help)",
+      "Bash(gh search)",
+      "Bash(gh issue list *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue status *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(cat *)",
+      "Bash(cargo run *)",
+      "Bash(cargo build *)",
+      "Bash(cargo test *)",
+      "Bash(cargo check *)",
+      "Bash(cargo clippy *)",
+      "Bash(gradle *)",
+      "Bash(./gradlew *)",
+      "Bash(ktlint --format)",
+      "Bash(man *)",
+      "Bash(make)",
+      "Bash(kubectl config get-contexts *)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:softwareengineering.stackexchange.com)",
+      "WebFetch(domain:stackoverflow.com)"
+    ],
+    "deny": [
+      "Edit(~/.claude/settings.json)",
+      "Edit(Makefile)",
+      "Read(*.sec)",
+      "Read(~/.ssh/id_ed25519)",
+      "Bash(git push *)",
+      "Bash(aws *)",
+      "Bash(kubectl *)",
+      "Bash(terraform *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(firefox *)",
+      "Bash(librewolf *)"
+    ],
+    "ask": [
+      "WebFetch(domain:google.com)",
+      "WebFetch(domain:skills.sh)",
+      "Bash(gh issue create *)",
+      "Bash(cargo add *)",
+      "Bash(cargo install *)",
+      "Bash(cargo update *)",
+      "Read(~/.ssh/*.pub)",
+      "Bash(k8s * get namespaces)",
+      "Edit(.git)",
+      "Edit(.gitconfig)",
+      "Edit(.git/*)"
+    ],
+    "defaultMode": "default"
+  },
+  "model": "sonnet",
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "github@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "companyAnnouncements": [
+    "Less is more",
+    "Keep it simple, stupid"
+  ]
+}

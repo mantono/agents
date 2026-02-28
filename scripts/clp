@@ -1,0 +1,2 @@
+#!/bin/sh
+EDITOR=hx claude --model sonnet --permission-mode plan $@
