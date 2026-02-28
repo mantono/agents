@@ -78,6 +78,7 @@
     "kotlin-lsp@claude-plugins-official": true,
     "github@claude-plugins-official": true
   },
+  "outputStyle": "Explanatory",
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true

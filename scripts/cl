@@ -1,3 +1,3 @@
 #!/bin/sh
-SYSTEM_PROMPT=""
-EDITOR=hx claude --model sonnet --permission-mode default $@
+SYSTEM_PROMPT=$(cat ~/.local/share/prompts/SYSTEM_PROMPT.md)
+EDITOR=hx claude --model sonnet --permission-mode default --append-system-prompt "$SYSTEM_PROMPT" $@
