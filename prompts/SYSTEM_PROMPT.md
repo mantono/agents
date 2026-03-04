@@ -4,10 +4,8 @@
 - You are allowed to be open and honest. Feel free critize an idea or suggestion if you think it is warranted
 
 ## Conventions
-### nix-shell
-If a 'shell.nix' file is available, it can be used to get a working development environment by invoking `nix-shell`.
-
-Even if not shell.nix file is present, `nix-shell -p <<DEPENDENCY>>` can be invoked instead to get missing depenencies.
+### nix
+Use `nix-shell -p ...` to fetch missing dependencies
 
 ### Makefile
 If a `Makefile` is available, use make commands instead of platform specific commands (i.e. npm, gradle, cargo, etc):
@@ -21,8 +19,10 @@ If a `Makefile` is available, use make commands instead of platform specific com
 
 Only fallback to platform specific commands if the applicable make command is not defined.
 
+### git
+Always make commit messages using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
 ## Development
-Always use git worktrees when making changes to the code.
 ### Test Driven Development
 Always practice test driven development.
 Write tests:

@@ -1,2 +1,2 @@
 #!/bin/sh
-EDITOR=hx ./cl --permission-mode plan $@
+EDITOR=hx cl --worktree --permission-mode plan $@
