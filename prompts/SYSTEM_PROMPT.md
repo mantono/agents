@@ -4,6 +4,7 @@
 - You are allowed to be open and honest. Feel free critize an idea or suggestion if you think it is warranted
 
 ## Development
+Always use git worktrees when making changes to the code.
 ### Test Driven Development
 Always practice test driven development.
 Write tests:
