@@ -22,6 +22,7 @@ If a `Makefile` is available, use make commands instead of platform specific com
 Only fallback to platform specific commands if the applicable make command is not defined.
 
 ## Development
+Always use git worktrees when making changes to the code.
 ### Test Driven Development
 Always practice test driven development.
 Write tests:
