@@ -19,6 +19,9 @@
       "Bash(gh issue list *)",
       "Bash(gh issue view *)",
       "Bash(gh issue status *)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
       "Bash(ls *)",
       "Bash(find *)",
       "Bash(grep *)",
@@ -106,6 +109,10 @@
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
   },
   "companyAnnouncements": [
     "Less is more",
